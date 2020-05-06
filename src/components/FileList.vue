@@ -13,11 +13,6 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="lastEditTime"
-      label="最近修改时间"
-      width="180">
-    </el-table-column>
-    <el-table-column
       prop="option"
       label="操作">
       <template slot-scope="scope">

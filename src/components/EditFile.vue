@@ -34,7 +34,8 @@
     data() {
       return {
         title: "",
-        content: ""
+        content: "",
+        canWrite: false
       }
     },
     created() {
@@ -59,13 +60,18 @@
         stompClient = Stomp.over(socket)
         stompClient.connect({}, (frame) => {
           stompClient.subscribe(`/topic/files/${this.title}`, (message) => {
-           this.content=message.body
+            console.log("message=" + message)
+            this.content = JSON.parse(message.body).message
+            this.canWrite = JSON.parse(message.body).canWrite
+          })
+          stompClient.subscribe(`/topic/files/${this.title}/who`, (message) => {
+            alert(message)
           })
         })
       },
 
       sendMsg() {
-        stompClient.send(`/app/files/${this.title}`,{},this.content)
+        stompClient.send(`/app/files/${this.title}`, {}, this.content)
       },
 
       submit() {
